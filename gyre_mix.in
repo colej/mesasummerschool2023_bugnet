@@ -1,0 +1,54 @@
+&constants
+/
+
+
+&rot
+/
+
+&model
+    add_center = .FALSE.
+/
+
+
+
+!&mode
+!    l = 0
+!/
+
+&mode
+    l = 1
+    !n_pg_max = 50
+/
+
+&osc
+    outer_bound = 'JCD'
+    nonadiabatic = .false.
+    inner_bound = 'ZERO_R'
+/
+
+
+&num
+    diff_scheme = 'MAGNUS_GL2'
+/
+
+&scan
+    grid_type = 'LINEAR'
+    grid_frame = 'INERTIAL'
+
+    freq_min = 35 
+    freq_max = 80
+    n_freq = 500
+    freq_units = 'UHZ'
+/
+
+&grid
+    w_osc = 10
+    w_exp = 2
+    w_ctr = 10
+/
+
+&ad_output
+/
+
+&nad_output
+/
