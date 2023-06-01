@@ -10,7 +10,7 @@
 
 
 !OPACITY, NETWORK, RATE, etc.
-
+create_pre_main_sequence_model = .false.
 
 !      near_zams_relax_omega_div_omega_crit = .true.
 !       new_omega_div_omega_crit = 0.2
@@ -20,21 +20,26 @@
 
       set_uniform_initial_composition = .true.
 ! Z = 0.014
-      initial_h1  = 0.7248215035699287
-      initial_h2  = 1.4496430071398575e-05
-      initial_he3 = 4.334602855925916e-05
-      initial_he4 = 0.26112065397144074
+!      initial_h1  = 0.7248215035699287
+!      initial_h2  = 1.4496430071398575e-05
+!      initial_he3 = 4.334602855925916e-05
+!      initial_he4 = 0.26112065397144074
 
+! Composition a la Li et al. 2022
+            initial_h1  = 0.6669718492873334
+            initial_h2  = 1.333943698574667e-05
+            initial_he3 = 5.0123679469208106e-05
+            initial_he4 = 0.3019498763205308
 
-! The above composition parameters are set as per Verma et al. 2019 with isotope ratios as per Asplund et al. 2009.
-!	Yini        = 0.244 + 1.226 * Zini
-!	Xini        = 1. - Yini - Zini
-!	initial_h1  = Xini / (1 + 2e-5)
-!	initial_h2  = initial_h1 * 2e-5
-!	initial_he4 = Yini / (1 + 1.66e-4)
-!	initial_he3 = initial_he4 * 1.66e-4
+! ZX          = 0.0465
+! Yini        = 0.302
+! Xini        = (1. - Yini)/ (1+ZX)
+! initial_h1  = Xini / (1 + 2e-5)
+! initial_h2  = initial_h1 * 2e-5
+! initial_he4 = Yini / (1 + 1.66e-4)
+! initial_he3 = initial_he4 * 1.66e-4
 
-      initial_zfracs = 6 ! AGSS09_zfracs
+      initial_zfracs = 3 ! GS98
 
 
     !!! EXTRA INFO FOR DEBUGGING
@@ -51,16 +56,17 @@
 &kap
 
     !opacities with AGSS09 abundances
-    kap_file_prefix = 'OP_a09_nans_removed_by_hand'
-    kap_lowT_prefix = 'lowT_fa05_a09p'
-    kap_CO_prefix = 'a09_co'
+    use_Zbase_for_Type1 = .false.
+    kap_file_prefix = 'gs98' ! 'OP_a09_nans_removed_by_hand'
+    kap_lowT_prefix = 'lowT_fa05_gs98'
+    kap_CO_prefix = 'gs98_co' !'a09_co'
 
     !!!!!!!!!!!!!!!
     !CO enhanced opacities
-    use_Type2_opacities = .true.
+    use_Type2_opacities = .false.
     kap_Type2_full_off_X = 1d-3
     kap_Type2_full_on_X = 1d-6
-    Zbase = 0.0142857 ! this is set to Z of the star in run_star_extras.f
+    Zbase = 0.031
 
 
 / ! end of kap namelist
@@ -97,11 +103,11 @@
         am_nu_ST_factor  = -1
 
 
-      log_directory = 'RG_M17_nonrot'
+      log_directory = 'RG_M14_nonrot'
 
-      initial_mass = 1.7d0
+      initial_mass = 1.40d0
       set_min_D_mix = .true.
-      min_D_mix = 1d2
+      min_D_mix = 1d1
 
 
 
@@ -131,7 +137,7 @@
       use_Ledoux_criterion = .true.
 
 
-      mixing_length_alpha = 1.8d0 ! Solar calibrated for Eddington_grey.
+      mixing_length_alpha = 2.0d0 !1.8d0 ! Solar calibrated for Eddington_grey.
       mlt_option = 'Cox'
 
       !H core overshoot calibrated to typical g-mode pulsator
@@ -139,15 +145,15 @@
       overshoot_zone_type(1) = 'burn_H'
       overshoot_zone_loc(1) = 'core'
       overshoot_bdy_loc(1) = 'top'
-      overshoot_f(1) = 0.005
+      overshoot_f(1) = 0.001
       overshoot_f0(1) = 0.005
 
       overshoot_scheme(2) = 'exponential'
       overshoot_zone_type(2) = 'any'
       overshoot_zone_loc(2) = 'shell'
       overshoot_bdy_loc(2) = 'any'
-      overshoot_f(2) = 0.015
-      overshoot_f0(2) = 0.005
+      overshoot_f(2) = 0.015 !0.015
+      overshoot_f0(2) = 0.005 ! 0.005
 
 !MESH AND TIMESTEP PARAMETERS: optimized for g modes
 
@@ -162,8 +168,8 @@
 
 
 ! ADD A TINY WIND.
-   cool_wind_RGB_scheme   = 'Reimers'
-   Reimers_scaling_factor = 0.5
+!   cool_wind_RGB_scheme   = 'Reimers'
+!   Reimers_scaling_factor = 0.5
 
 / ! end of controls namelist
 

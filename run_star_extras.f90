@@ -78,8 +78,8 @@
 
            print *
             print "('Insert delta_omega_g in nHz')"
-            read(*,*) delta_omega_g
-            !delta_omega_g = 126
+            !read(*,*) delta_omega_g
+            delta_omega_g = 126
             write(*,*)'delta_omega_g= ',delta_omega_g
 
 
@@ -153,7 +153,7 @@
               return
            end if
 
-           if (safe_log10(s% Teff) < 3.7) call run_gyre(id, ierr)
+           if (safe_log10(s% Teff) < 3.7 .and. .false.) call run_gyre(id, ierr)
 
            ! if you want to check multiple conditions, it can be useful
            ! to set a different termination code depending on which
@@ -190,7 +190,7 @@
            ierr = 0
            call star_ptr(id, s, ierr)
            if (ierr /= 0) return
-           mu_0 = 4d-7*pi/(1.602176634d-19)**2*1e4
+           mu_0 = 4d-8*pi
 
            ! note: do NOT add the extras names to history_columns.list
            ! the history_columns.list is only for the built-in history column options.
@@ -204,17 +204,17 @@
            integral_N3 = 0.0_dp
            integral_N = 0.0_dp
            do k = 1, s%nz - 1
-             integral_N3 = integral_N3 + 0.5_dp*(brunt_N(k)/(s% rho(k)) + brunt_N(k+1)/(s% rho(k+1)))**3*abs(s% r(k+1) - s% r(k)) / s% r(k)
+             integral_N3 = integral_N3 + 0.5_dp*(brunt_N(k)**3/(s% rho(k)) + brunt_N(k+1)**3/(s% rho(k+1)))*abs(s% r(k+1) - s% r(k)) / (s% r(k))**3
              integral_N  = integral_N + 0.5_dp*(brunt_N(k) + brunt_N(k+1))*abs(s% r(k+1) - s% r(k)) / s% r(k)
            end do
            I = integral_N3 / integral_N
            vals(1) = I
            omega_max = 2 * pi * s% nu_max * 1d-6
-           Br_mean = sqrt(mu_0 * (2*pi*delta_omega_g*1d-9) * omega_max**3 / I)
+           Br_mean = sqrt(mu_0 * (2*pi*delta_omega_g*1d-9) * omega_max**3 / I)*10 ! In kG.
            vals(2) = Br_mean
            Delta_Pi1 = (2._dp*pi**2)/integral_N / (sqrt(2._dp))
            vals(3) = Delta_Pi1
-           write(*,*) 'Br_mean [kG] = ', Br_mean/1d3, 'Delta_Pi1 [s] = ', Delta_Pi1, 'nu_max [uHz] = ', s% nu_max, 'I = ', I
+           write(*,*) 'Br_mean [kG] = ', Br_mean, 'Delta_Pi1 [s] = ', Delta_Pi1, 'nu_max [uHz] = ', s% nu_max, 'delta_nu [uHz]', s% delta_nu,   'I = ', I
            deallocate(brunt_N)
 
 
