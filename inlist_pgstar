@@ -1,30 +1,5 @@
 &pgstar
 
-! Grid1_win_flag = .true.
-! Grid1_file_interval = 5
-! Grid1_file_width = 25
-! Grid1_num_cols = 1
-! Grid1_num_rows = 1
-! Grid1_win_width = 10
-! Grid1_win_aspect_ratio = 0.5
-! Grid1_xleft = 0.10
-! Grid1_xright = 0.50
-! Grid1_ybot = 0.70
-! Grid1_ytop = 0.90
-! Grid1_num_plots = 1
-! Grid1_plot_name(1) = 'Profile_Panels1'
-! Profile_Panels1_num_panels = 1
-! Profile_Panels1_title = 'Mode inertia l=1'
-! Profile_Panels1_xaxis_name = 'freq_l1'
-! Profile_Panels1_yaxis_name = 'Enorm_l1'
-! Profile_Panels1_other_yaxis_name(1) = ''
-! !Profile_Panels1_same_yaxis_range(1) = .true.
-! Profile_Panels1_xmin = 30!0.1
-! Profile_Panels1_xmax = 80!!1.0
-! !Profile_Panels1_ymin(1) = -8 !3400
-! !Profile_Panels1_ymax(1) =-4 !3500
-
-
   ! Set up grid layout
 
   file_white_on_black_flag = .false.
@@ -64,6 +39,9 @@
 
   show_TRho_Profile_legend = .true.
   show_TRho_Profile_eos_regions = .true.
+  Kipp_show_mixing = .true.
+  Kipp_show_burn = .true.
+  Kipp_show_luminosities = .false.
 
   ! Add HR diagram
 
@@ -164,15 +142,35 @@
 
   ! Add mode inertia panel
 
-  Grid1_plot_name(6) = 'Profile_Panels1'
-  Profile_Panels1_num_panels = 1
-  Profile_Panels1_title = 'Mode inertia l=1'
-  Profile_Panels1_xaxis_name = 'freq_l1'
-  Profile_Panels1_yaxis_name = 'Enorm_l1'
-  Profile_Panels1_other_yaxis_name(1) = ''
-  !Profile_Panels1_same_yaxis_range(1) = .true.
-  Profile_Panels1_xmin = 35
-  Profile_Panels1_xmax = 80
+
+  Grid1_plot_name(6) = 'History_Track1' !'Profile_Panels1'
+
+  History_Track1_title = 'Astero'
+  History_Track1_xname = 'nu_max'
+  History_Track1_yname = 'Delta_Pi1'
+  History_Track1_xaxis_label = 'nu_max'
+  History_Track1_yaxis_label = 'Delta_Pi1'
+
+
+  History_Track1_xmin = 180d0 ! only used if /= -101d0
+  History_Track1_xmax = 230d0 ! only used if /= -101d0
+  History_Track1_ymin = 75d0 ! only used if /= -101d0
+  History_Track1_ymax = 90d0 ! only used if /= -101d0
+
+  show_History_Track1_target_box = .true.
+  History_Track1_n_sigma = -5 ! -n means show sig 1..n
+  History_Track1_xtarget = 191.6d0
+  History_Track1_xsigma = 1d0
+  History_Track1_ytarget = 83.19d0
+  History_Track1_ysigma = 1d0
+
+!  Profile_Panels1_num_panels = 1
+!  Profile_Panels1_title = 'Mode inertia l=1'
+!  Profile_Panels1_xaxis_name = 'freq_l1'
+!  Profile_Panels1_yaxis_name = 'Enorm_l1'
+!  Profile_Panels1_other_yaxis_name(1) = ''
+!  Profile_Panels1_xmin = 35
+!  Profile_Panels1_xmax = 80
   Grid1_plot_row(6) = 5
   Grid1_plot_rowspan(6) = 4
   Grid1_plot_col(6) = 5
@@ -199,4 +197,10 @@
   Grid1_txt_scale_factor(7) = 0.5
 
   Mode_Prop_xaxis_name = 'radius'
+
+  Grid1_file_flag = .true.
+  Grid1_file_dir = 'pgplot'
+  Grid1_file_prefix = 'grid_'
+  file_white_on_black_flag = .true.
+  Grid1_file_interval = 10
 / ! end of pgstar namelist
