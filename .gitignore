@@ -1,0 +1,15 @@
+# MESA output files
+*.data
+*.GYRE
+*.mod
+*.png
+
+#photos
+minilab_1/work/photos/*
+minilab_2/work/photos/*
+maxilab/work/photos/*
+
+# compiled files
+minilab_1/work/make/*
+minilab_2/work/make/*
+maxilab/work/make/*
