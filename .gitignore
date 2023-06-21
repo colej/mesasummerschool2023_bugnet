@@ -1,8 +1,10 @@
 # MESA output files
+*.dat
 *.data
 *.GYRE
 *.mod
 *.png
+*.index
 
 #photos
 minilab_1/work/photos/*
