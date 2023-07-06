@@ -288,6 +288,7 @@
            ! to update the star log,
               ! s% need_to_update_history_now = .true.
 
+           if (s% nu_max .lt. 250.) s% write_profiles_flag = .true.
            if (s% nu_max < 180.) extras_finish_step = terminate
 
 
