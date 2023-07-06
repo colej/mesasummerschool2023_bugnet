@@ -9,7 +9,7 @@
 #photos
 minilab_1/work/photos/*
 minilab_2/work_rot/photos/*
-minilab_2/work_nonrot/photos/*
+minilab_2/work_constant_viscosity/photos/*
 maxilab/work/photos/*
 
 # compiled files
