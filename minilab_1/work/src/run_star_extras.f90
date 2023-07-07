@@ -173,7 +173,7 @@
            ierr = 0
            call star_ptr(id, s, ierr)
            if (ierr /= 0) return
-           how_many_extra_history_columns = 3
+           how_many_extra_history_columns = 0
         end function how_many_extra_history_columns
 
 
@@ -193,31 +193,6 @@
            ! note: do NOT add the extras names to history_columns.list
            ! the history_columns.list is only for the built-in history column options.
            ! it must not include the new column names you are adding here.
-
-           allocate(brunt_N(s% nz))
-           names(1) = 'I'
-           names(2) = 'Br_mean'
-           names(3) = 'Delta_Pi1'
-           brunt_N = sqrt(max(0._dp,s% brunt_N2))
-           integral_N3 = 0.0_dp
-           integral_N = 0.0_dp
-           do k = 2, s%nz
-             !integral_N3 = integral_N3 + 0.5_dp*(brunt_N(k)**3/(s% rho(k)) + brunt_N(k+1)**3/(s% rho(k+1)))*abs(s% r(k+1) - s% r(k)) / (s% r(k))**3
-             !integral_N  = integral_N + 0.5_dp*(brunt_N(k) + brunt_N(k+1))*abs(s% r(k+1) - s% r(k)) / s% r(k)
-             integral_N3 = integral_N3 + (brunt_N(k)**3/(s% rho(k)))*abs(s% rmid(k-1) - s% rmid(k)) / (s% r(k))**3
-             integral_N  = integral_N + brunt_N(k)*abs(s% rmid(k-1) - s% rmid(k)) / s% r(k)
-           end do
-           I = integral_N3 / integral_N
-           vals(1) = I
-           omega_max = 2 * pi * s% nu_max * 1d-6
-           Br_mean = sqrt(mu_0 * (2*pi*delta_omega_g*1d-9) * omega_max**3 / I)*10 ! In kG.
-           vals(2) = Br_mean
-           Delta_Pi1 = (2._dp*pi**2)/integral_N / (sqrt(2._dp))
-           vals(3) = Delta_Pi1
-           write(*,*) 'Br_mean [kG] = ', Br_mean, 'Delta_Pi1 [s] = ', Delta_Pi1, 'nu_max [uHz] = ', s% nu_max, 'delta_nu [uHz]', s% delta_nu,   'I = ', I
-           chi2 = (Delta_Pi1 - 83.16)**2 + (s% nu_max - 191.6)**2
-           write(*,*) 'chi2', chi2
-           deallocate(brunt_N)
 
         end subroutine data_for_extra_history_columns
 
@@ -369,7 +344,7 @@
            ! to update the star log,
               ! s% need_to_update_history_now = .true.
 
-           if (safe_log10(s% Teff) < 3.7 .and. .false.) call run_gyre(id, ierr)
+           if (safe_log10(s% Teff) < 3.7 .and. s%x_logical_ctrl(1)) call run_gyre(id, ierr)
            chi2_old = chi2
 
 
@@ -411,7 +386,6 @@
 
            ! Run GYRE to get modes
 
-           !call gyre_get_modes(0, process_mode, ipar, rpar)
            call gyre_get_modes(1, process_mode, ipar, rpar)
 
            gyre_has_run = .true.
@@ -438,8 +412,7 @@
 
               frequencies(md%l+1, md%id-nmax_prev) = REAL(md%freq('UHZ'))
               inertias(md%l+1, md%id-nmax_prev) = REAL(md%E_norm())
-              nmax = md%id !The mode ID in GYRE is unique throughout the run. That means if in the first call N modes where found, the mode ID of the first mode of the second call has ID = N+1.
-              ! We thus save the number of modes found such that we always store them in entries 1,...,N.
+              nmax = md%id 
               retcode = 0
            end subroutine process_mode
 
