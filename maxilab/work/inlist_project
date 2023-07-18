@@ -6,45 +6,29 @@
 &star_job
       pgstar_flag = .true.
 
+      pause_before_terminate = .true.
 !PMS
 
 
-!OPACITY, NETWORK, RATE, etc.
-create_pre_main_sequence_model = .false.
-
-!      near_zams_relax_omega_div_omega_crit = .true.
-!       new_omega_div_omega_crit = 0.2
-!       set_near_zams_omega_div_omega_crit_steps = 20
+      create_pre_main_sequence_model = .false.
 
 !CHANGE SOLAR ABUNDANCES
 
       set_uniform_initial_composition = .true.
-! Z = 0.014
-!      initial_h1  = 0.7248215035699287
-!      initial_h2  = 1.4496430071398575e-05
-!      initial_he3 = 4.334602855925916e-05
-!      initial_he4 = 0.26112065397144074
+
+      !save_model_when_terminate = .true.
+      !save_model_filename = 'M14_start_RGB'
+      load_saved_model = .false.
+      load_model_filename = 'M14_start_RGB'
 
 ! Composition a la Li et al. 2022
-            initial_h1  = 0.6669718492873334
-            initial_h2  = 1.333943698574667e-05
-            initial_he3 = 5.0123679469208106e-05
-            initial_he4 = 0.3019498763205308
+      initial_h1  = 0.6669718492873334
+      initial_h2  = 1.333943698574667e-05
+      initial_he3 = 5.0123679469208106e-05
+      initial_he4 = 0.3019498763205308
 
-! ZX          = 0.0465
-! Yini        = 0.302
-! Xini        = (1. - Yini)/ (1+ZX)
-! initial_h1  = Xini / (1 + 2e-5)
-! initial_h2  = initial_h1 * 2e-5
-! initial_he4 = Yini / (1 + 1.66e-4)
-! initial_he3 = initial_he4 * 1.66e-4
 
       initial_zfracs = 3 ! GS98
-
-
-    !!! EXTRA INFO FOR DEBUGGING
-    report_retries = .true.
-
 
 
 / ! end of star_job namelist
@@ -55,7 +39,7 @@ create_pre_main_sequence_model = .false.
 
 &kap
 
-    !opacities with AGSS09 abundances
+    !opacities with GS98 abundances
     use_Zbase_for_Type1 = .false.
     kap_file_prefix = 'gs98' ! 'OP_a09_nans_removed_by_hand'
     kap_lowT_prefix = 'lowT_fa05_gs98'
@@ -72,7 +56,6 @@ create_pre_main_sequence_model = .false.
 / ! end of kap namelist
 
 &controls
-
        use_other_am_mixing = .false.
 
        set_uniform_am_nu_non_rot = .false.
@@ -157,19 +140,13 @@ create_pre_main_sequence_model = .false.
 
 !MESH AND TIMESTEP PARAMETERS: optimized for g modes
 
-!      mesh_delta_coeff  = 0.4
-!      varcontrol_target = 1d-3
-!      max_allowed_nz    = 50000
-!      time_delta_coeff = 0.5 !1d0 !0.15
-
-
 
     do_conv_premix = .true.
+    x_ctrl(1) = 126d0
+    x_ctrl(2) = 83.16
+    x_ctrl(3) = 191.6
 
 
-! ADD A TINY WIND.
-!   cool_wind_RGB_scheme   = 'Reimers'
-!   Reimers_scaling_factor = 0.5
 
 / ! end of controls namelist
 

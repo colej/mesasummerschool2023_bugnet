@@ -35,7 +35,7 @@
     grid_type = 'LINEAR'
     grid_frame = 'INERTIAL'
 
-    freq_min = 35
+    freq_min = 35 
     freq_max = 80
     n_freq = 500
     freq_units = 'UHZ'
