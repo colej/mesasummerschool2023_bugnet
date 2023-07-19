@@ -143,7 +143,7 @@
   ! Add mode inertia panel
 
 
-  Grid1_plot_name(6) = 'History_Track1' !'Profile_Panels1'
+  Grid1_plot_name(6) = 'History_Track1'
 
   History_Track1_title = 'Astero'
   History_Track1_xname = 'nu_max'
@@ -157,20 +157,15 @@
   History_Track1_ymin = 75d0 ! only used if /= -101d0
   History_Track1_ymax = 90d0 ! only used if /= -101d0
 
-  show_History_Track1_target_box = .true.
-  History_Track1_n_sigma = -5 ! -n means show sig 1..n
-  History_Track1_xtarget = 191.6d0
-  History_Track1_xsigma = 1d0
-  History_Track1_ytarget = 83.19d0
-  History_Track1_ysigma = 1d0
+! >>> Add the observed values of Delta_Pi1 and nu_max below.
 
-!  Profile_Panels1_num_panels = 1
-!  Profile_Panels1_title = 'Mode inertia l=1'
-!  Profile_Panels1_xaxis_name = 'freq_l1'
-!  Profile_Panels1_yaxis_name = 'Enorm_l1'
-!  Profile_Panels1_other_yaxis_name(1) = ''
-!  Profile_Panels1_xmin = 35
-!  Profile_Panels1_xmax = 80
+  show_History_Track1_target_box = .true.
+  History_Track1_n_sigma = -3 ! -n means show sig 1..n
+  History_Track1_xtarget = 191.6d0
+  History_Track1_xsigma  = 1d0
+  History_Track1_ytarget = 83.19d0
+  History_Track1_ysigma  = 1d0
+
   Grid1_plot_row(6) = 5
   Grid1_plot_rowspan(6) = 4
   Grid1_plot_col(6) = 5
