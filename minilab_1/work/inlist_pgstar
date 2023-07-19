@@ -119,9 +119,9 @@
 
   Text_Summary1_name(1,4) = 'nu_max'
   Text_Summary1_name(2,4) = 'delta_nu'
-  Text_Summary1_name(3,4) = 'delta_Pg'
-  Text_Summary1_name(4,4) = 'Delta_Pi1'
-  Text_Summary1_name(5,4) = 'Br_mean'
+  Text_Summary1_name(3,4) = ''
+  Text_Summary1_name(4,4) = ''
+  Text_Summary1_name(5,4) = ''
   Text_Summary1_name(6,4) = ''
   Text_Summary1_name(7,4) = ''
   Text_Summary1_name(8,4) = ''
@@ -142,26 +142,6 @@
 
   ! Add mode inertia panel
 
-
-  Grid1_plot_name(6) = 'Profile_Panels1' !
-  Grid1_plot_row(6) = 5
-  Grid1_plot_rowspan(6) = 4
-  Grid1_plot_col(6) = 5
-  Grid1_plot_colspan(6) = 6
-
-  Profile_Panels1_num_panels = 1
-  Profile_Panels1_title = 'Mode inertia l=1'
-  Profile_Panels1_xaxis_name = 'freq_l1'
-  Profile_Panels1_yaxis_name = 'Enorm_l1'
-  Profile_Panels1_other_yaxis_name(1) = ''
-  Profile_Panels1_xmin = 50
-  Profile_Panels1_xmax = 150
-
-  Grid1_plot_pad_left(6) = 0.05
-  Grid1_plot_pad_right(6) = 0.05
-  Grid1_plot_pad_top(6) = 0.04
-  Grid1_plot_pad_bot(6) = 0.07
-  Grid1_txt_scale_factor(6) = 0.5
 
   ! Add mode propagation plot
 

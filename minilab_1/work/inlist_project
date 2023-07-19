@@ -33,7 +33,7 @@
 
 &kap
 
-    !opacities with AGSS09 abundances
+    !opacities with GS98 abundances
     use_Zbase_for_Type1 = .false.
     kap_file_prefix = 'gs98' ! 'OP_a09_nans_removed_by_hand'
     kap_lowT_prefix = 'lowT_fa05_gs98'
@@ -51,8 +51,8 @@
 
 &controls
 
-   
-   x_logical_ctrl(1) = .true.
+   ! extra control parameter used to run GYRE
+   x_logical_ctrl(1) = .false.
 
   ! when to stop
     log_Teff_lower_limit = 3.5

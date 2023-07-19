@@ -75,12 +75,6 @@
            s% how_many_extra_profile_header_items => how_many_extra_profile_header_items
            s% data_for_extra_profile_header_items => data_for_extra_profile_header_items
 
-           print *
-            print "('Insert delta_omega_g in nHz')"
-            !read(*,*) delta_omega_g
-            delta_omega_g = 126
-            write(*,*)'delta_omega_g= ',delta_omega_g
-
 
         end subroutine extras_controls
 
@@ -94,27 +88,12 @@
            call star_ptr(id, s, ierr)
            if (ierr /= 0) return
 
-           ! Initialize GYRE
-
-           call gyre_init('gyre_mix.in')
-
-           ! Set constants
-
-           call gyre_set_constant('G_GRAVITY', standard_cgrav)
-           call gyre_set_constant('C_LIGHT', clight)
-           call gyre_set_constant('A_RADIATION', crad)
-
-           call gyre_set_constant('M_SUN', Msun)
-           call gyre_set_constant('R_SUN', Rsun)
-           call gyre_set_constant('L_SUN', Lsun)
-
-           call gyre_set_constant('GYRE_DIR', TRIM(mesa_dir)//'/gyre/gyre')
 
     ! >>> Insert allocation code below
 
            allocate(frequencies(2,300), inertias(2,300))
            nmax = 0
-           chi2_old = 1d99
+           !chi2_old = 1d99
 
 
         end subroutine extras_startup
@@ -145,12 +124,12 @@
            call star_ptr(id, s, ierr)
            if (ierr /= 0) return
            extras_check_model = keep_going
-           if (chi2 > chi2_old .and. safe_log10(s% Teff) < 3.7) then
+           !if (safe_log10(s% Teff) < 3.7) then
               ! stop when star hydrogen mass drops to specified level
-              extras_check_model = terminate
-              write(*, *) 'chi2 minimum reached'
-              return
-           end if
+            !  extras_check_model = terminate
+             ! write(*, *) 'log Teff < 3.7'
+              !return
+           !end if
 
 
            ! if you want to check multiple conditions, it can be useful
@@ -345,7 +324,7 @@
               ! s% need_to_update_history_now = .true.
 
            if (safe_log10(s% Teff) < 3.7 .and. s%x_logical_ctrl(1)) call run_gyre(id, ierr)
-           chi2_old = chi2
+           !chi2_old = chi2
 
 
            ! see extras_check_model for information about custom termination codes
