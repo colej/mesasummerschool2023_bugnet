@@ -1,0 +1,128 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Inlist for MESA r23.05.01 to evole a RG from a precomputed ZAMS model.
+! - Joey Mombarg
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+&star_job
+    pgstar_flag = .true.
+    pause_before_terminate = .true.
+
+!PMS
+
+    create_pre_main_sequence_model = .false.
+
+!CHANGE SOLAR ABUNDANCES
+
+      set_uniform_initial_composition = .true.
+
+      ! Composition a la Li et al. 2022
+      initial_h1  = 0.6669718492873334
+      initial_h2  = 1.333943698574667e-05
+      initial_he3 = 5.0123679469208106e-05
+      initial_he4 = 0.3019498763205308
+
+      initial_zfracs = 3 ! GS98
+
+
+
+/ ! end of star_job namelist
+
+&eos
+
+/ ! end of eos namelist
+
+&kap
+
+    !opacities with AGSS09 abundances
+    use_Zbase_for_Type1 = .false.
+    kap_file_prefix = 'gs98' ! 'OP_a09_nans_removed_by_hand'
+    kap_lowT_prefix = 'lowT_fa05_gs98'
+    kap_CO_prefix = 'gs98_co' !'a09_co'
+
+    !!!!!!!!!!!!!!!
+    !CO enhanced opacities
+    use_Type2_opacities = .false.
+    kap_Type2_full_off_X = 1d-3
+    kap_Type2_full_on_X = 1d-6
+    Zbase = 0.031
+
+
+/ ! end of kap namelist
+
+&controls
+
+   
+   x_logical_ctrl(1) = .true.
+
+  ! when to stop
+    log_Teff_lower_limit = 3.5
+
+
+    log_directory = 'RG_M14_nonrot'
+
+    initial_mass = 1.40d0
+    set_min_D_mix = .true.
+    min_D_mix = 1d1
+
+
+
+!OUTPUT OPTIONS
+      profile_interval       = 10
+
+
+      !Pulsation data output
+      pulse_data_format = 'GYRE'
+      write_pulse_data_with_profile = .true.
+
+      num_cells_for_smooth_brunt_B = 0
+      interpolate_rho_for_pulse_data = .true.
+      add_center_point_to_pulse_data     = .true.
+      keep_surface_point_for_pulse_data  = .true.
+      add_double_points_to_pulse_data    = .true.
+
+
+
+!PHYSICS
+
+      atm_option = 'T_tau'
+      atm_T_tau_relation = 'Eddington'
+      atm_T_tau_opacity = 'varying'
+
+      use_Ledoux_criterion = .true.
+
+
+      mixing_length_alpha = 2.0d0 !1.8d0 ! Solar calibrated for Eddington_grey.
+      mlt_option = 'Cox'
+
+      !H core overshoot calibrated to typical g-mode pulsator
+      overshoot_scheme(1) = 'exponential'
+      overshoot_zone_type(1) = 'burn_H'
+      overshoot_zone_loc(1) = 'core'
+      overshoot_bdy_loc(1) = 'top'
+      overshoot_f(1) = 0.001
+      overshoot_f0(1) = 0.005
+
+      overshoot_scheme(2) = 'exponential'
+      overshoot_zone_type(2) = 'any'
+      overshoot_zone_loc(2) = 'shell'
+      overshoot_bdy_loc(2) = 'any'
+      overshoot_f(2) = 0.015 !0.015
+      overshoot_f0(2) = 0.005 ! 0.005
+
+!MESH AND TIMESTEP PARAMETERS: optimized for g modes
+
+!      mesh_delta_coeff  = 0.4
+!      varcontrol_target = 1d-3
+!      max_allowed_nz    = 50000
+!      time_delta_coeff = 0.5 !1d0 !0.15
+
+
+
+    do_conv_premix = .true.
+
+/ ! end of controls namelist
+
+&pgstar
+
+
+/ ! end of pgstar namelist
