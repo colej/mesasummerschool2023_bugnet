@@ -1,0 +1,70 @@
+&constants
+/
+
+&model
+    model_type = 'EVOL'
+    file_format = 'MESA'
+    file = './LOGS/profile47.profile.GYRE'
+    add_center = .TRUE.
+
+/
+
+
+&rot
+  coriolis_method = 'TAR'
+  omega_rot_source = 'MODEL'
+
+/
+
+
+
+&mode
+    l = 0
+/
+
+&mode
+    l = 1
+/
+
+&mode
+    l = 2
+/
+
+&osc
+    outer_bound = 'JCD'
+    nonadiabatic = .false.
+    inner_bound = 'REGULAR'
+/
+
+
+&num
+    diff_scheme = 'MAGNUS_GL2'
+/
+
+&scan
+    grid_type = 'LINEAR'
+    grid_frame = 'INERTIAL'
+
+
+    freq_min = 140
+    freq_max = 230
+    n_freq = 400
+    freq_units = 'UHZ'
+/
+
+&grid
+    w_osc = 10
+    w_exp = 2
+    w_ctr = 10
+/
+
+&ad_output
+    summary_file = './LOGS/mixed_modes.summary'
+    summary_file_format = 'TXT'
+    summary_item_list = 'l,n_pg,n_p,n_g,freq,eta,E,E_p,E_g,E_norm,E_ratio,H'
+    freq_units = 'UHZ'
+/
+
+&nad_output
+/
+
