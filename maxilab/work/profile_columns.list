@@ -65,7 +65,7 @@
    !radius_cm ! radius at outer boundary of zone (in centimeters)
    !radius_km ! radius at outer boundary of zone (in kilometers)
    !logR_cm ! log10 radius at outer boundary of zone (in centimeters)
-   !rmid ! radius at center by mass of zone (in Rsun units)
+   rmid ! radius at center by mass of zone (in Rsun units)
    !r_div_R ! fraction of total radius
 
    !velocity   ! velocity at outer boundary of zone (cm/s) -- 0 if no velocity variable
@@ -647,7 +647,7 @@
    !eps_phase_separation
 
 !# Oscillations
-   !brunt_N2 ! brunt-vaisala frequency squared
+   brunt_N2 ! brunt-vaisala frequency squared
    !brunt_N2_structure_term
    !brunt_N2_composition_term
    !log_brunt_N2_structure_term

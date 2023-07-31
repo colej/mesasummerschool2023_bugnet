@@ -9,15 +9,8 @@
     add_center = .FALSE.
 /
 
-
-
-!&mode
-!    l = 0
-!/
-
 &mode
     l = 1
-    !n_pg_max = 50
 /
 
 &osc
@@ -35,9 +28,9 @@
     grid_type = 'LINEAR'
     grid_frame = 'INERTIAL'
 
-    freq_min = 35
-    freq_max = 80
-    n_freq = 500
+    freq_min = 50
+    freq_max = 150
+    n_freq = 1000
     freq_units = 'UHZ'
 /
 

@@ -1,0 +1,78 @@
+&constants
+/
+
+
+&rot
+    !Omega_rot_source = 'UNIFORM'
+    !Omega_rot = 0.1
+    !Omega_rot_units = 'CYC_PER_DAY'
+    coriolis_method = 'TAR'
+/
+
+&model
+    !add_center = .FALSE.
+    model_type = 'EVOL'
+    file = 'RG_M17_nonrot/profile70.data.GYRE'
+    file_format = 'MESA'
+/
+
+
+
+&mode
+    l = 1
+    m = 0
+    n_pg_min = -100
+    n_pg_max = -10
+/
+
+&mode
+    l = 1
+    m = 1
+    n_pg_min = -100
+    n_pg_max = -10
+/
+
+&osc
+    outer_bound = 'UNNO'
+    nonadiabatic = .false.
+    variables_set = 'DZIEM'
+/
+
+&rot
+/
+
+&num
+    diff_scheme = 'MAGNUS_GL2'
+/
+
+&scan
+    grid_type = 'INVERSE'
+    grid_frame = 'INERTIAL'
+
+    freq_min = 0.01 !0.3
+    freq_max = 0.1 !2.5
+    freq_max_units = 'GRAVITY_DELTA'
+    freq_min_units = 'GRAVITY_DELTA'
+    freq_frame = 'COROT_I'
+    n_freq = 600
+    freq_units = 'UHZ'
+/
+
+&grid
+    w_osc = 10
+    w_exp = 2
+    w_ctr = 10
+/
+
+&ad_output
+    summary_file = 'RG_M17/summary_profile70.data'
+    freq_units = 'CYC_PER_DAY'
+    freq_frame = 'INERTIAL'
+    summary_file_format = 'TXT'
+    summary_item_list = 'M_star,R_star,L_star,l,m,n_p,n_g,n_pg,omega,freq,E_norm,beta'
+    ! detail_template = 'ad_mode_l%L_n%N_j%J.HDF'
+    ! detail_item_list = 'M_star,R_star,L_star,l,m,n,n_p,n_g,n_pg,freq,xi_h,xi_r,x,dW_dx,Gamma_1,P,rho,T,dE_dx'
+/
+
+&nad_output
+/

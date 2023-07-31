@@ -4,46 +4,24 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 &star_job
-      pgstar_flag = .true.
+    pgstar_flag = .true.
+    pause_before_terminate = .true.
 
 !PMS
 
-
-!OPACITY, NETWORK, RATE, etc.
-create_pre_main_sequence_model = .false.
-
-!      near_zams_relax_omega_div_omega_crit = .true.
-!       new_omega_div_omega_crit = 0.2
-!       set_near_zams_omega_div_omega_crit_steps = 20
+    create_pre_main_sequence_model = .false.
 
 !CHANGE SOLAR ABUNDANCES
 
       set_uniform_initial_composition = .true.
-! Z = 0.014
-!      initial_h1  = 0.7248215035699287
-!      initial_h2  = 1.4496430071398575e-05
-!      initial_he3 = 4.334602855925916e-05
-!      initial_he4 = 0.26112065397144074
 
-! Composition a la Li et al. 2022
-            initial_h1  = 0.6669718492873334
-            initial_h2  = 1.333943698574667e-05
-            initial_he3 = 5.0123679469208106e-05
-            initial_he4 = 0.3019498763205308
-
-! ZX          = 0.0465
-! Yini        = 0.302
-! Xini        = (1. - Yini)/ (1+ZX)
-! initial_h1  = Xini / (1 + 2e-5)
-! initial_h2  = initial_h1 * 2e-5
-! initial_he4 = Yini / (1 + 1.66e-4)
-! initial_he3 = initial_he4 * 1.66e-4
+      ! Composition a la Li et al. 2022
+      initial_h1  = 0.6669718492873334
+      initial_h2  = 1.333943698574667e-05
+      initial_he3 = 5.0123679469208106e-05
+      initial_he4 = 0.3019498763205308
 
       initial_zfracs = 3 ! GS98
-
-
-    !!! EXTRA INFO FOR DEBUGGING
-    report_retries = .true.
 
 
 
@@ -55,7 +33,7 @@ create_pre_main_sequence_model = .false.
 
 &kap
 
-    !opacities with AGSS09 abundances
+    !opacities with GS98 abundances
     use_Zbase_for_Type1 = .false.
     kap_file_prefix = 'gs98' ! 'OP_a09_nans_removed_by_hand'
     kap_lowT_prefix = 'lowT_fa05_gs98'
@@ -73,48 +51,26 @@ create_pre_main_sequence_model = .false.
 
 &controls
 
-       use_other_am_mixing = .false.
+   ! extra control parameter used to run GYRE
+   x_logical_ctrl(1) = .false.
 
-       set_uniform_am_nu_non_rot = .false.
-        uniform_am_nu_non_rot = 1d20
-        am_D_mix_factor = 0d0 !0d0 default
-        am_gradmu_factor = 0.05d0 !0.05d0 default
-        am_nu_factor = 1 ! 1 default
-        am_nu_non_rotation_factor = 1 ! 1 default
-        am_nu_omega_rot_factor = 1 ! 1 default
-        am_nu_omega_non_rot_factor = 1 ! 1 default
-        am_nu_j_rot_factor = 0 ! 0 default
-        am_nu_j_non_rot_factor = 0 ! 0 default
-        am_nu_visc_factor = 1 ! 1 default
-
-        !Set to the 6 controls below equal to 1 for AM transport by rotationally-induced processes (and uniform_am_nu_non_rot = 0).
-        D_DSI_factor = 0
-        D_SH_factor  = 0
-        D_SSI_factor = 0
-        D_ES_factor  = 0
-        D_GSF_factor = 0
-        D_ST_factor  = 0
-
-        am_nu_DSI_factor = -1
-        am_nu_SH_factor  = -1
-        am_nu_SSI_factor = -1
-        am_nu_ES_factor  = -1
-        am_nu_GSF_factor = -1
-        am_nu_ST_factor  = -1
+  ! when to stop
+    log_Teff_lower_limit = 3.5
 
 
-      log_directory = 'RG_M14_nonrot'
+    log_directory = 'RG_M14_nonrot'
 
-      initial_mass = 1.40d0
-      set_min_D_mix = .true.
-      min_D_mix = 1d1
+    initial_mass = 1.40d0
+    set_min_D_mix = .true.
+    min_D_mix = 1d1
 
 
 
 !OUTPUT OPTIONS
-    profile_interval       = 1
+      profile_interval       = 10
 
 
+      !Pulsation data output
       pulse_data_format = 'GYRE'
       write_pulse_data_with_profile = .true.
 
@@ -123,8 +79,6 @@ create_pre_main_sequence_model = .false.
       add_center_point_to_pulse_data     = .true.
       keep_surface_point_for_pulse_data  = .true.
       add_double_points_to_pulse_data    = .true.
-
-      max_num_profile_models = 250
 
 
 
@@ -165,11 +119,6 @@ create_pre_main_sequence_model = .false.
 
 
     do_conv_premix = .true.
-
-
-! ADD A TINY WIND.
-!   cool_wind_RGB_scheme   = 'Reimers'
-!   Reimers_scaling_factor = 0.5
 
 / ! end of controls namelist
 
