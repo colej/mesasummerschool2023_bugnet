@@ -11,8 +11,3 @@ minilab_1/work/photos/*
 minilab_2/work_rot/photos/*
 minilab_2/work_constant_viscosity/photos/*
 maxilab/work/photos/*
-
-# compiled files
-minilab_1/work/make/*
-minilab_2/*/make/*
-maxilab/work/make/*
