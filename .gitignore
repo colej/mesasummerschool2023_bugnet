@@ -3,11 +3,19 @@
 *.data
 *.GYRE
 *.mod
+*.model
 *.png
 *.index
 
+
 #photos
 minilab_1/work/photos/*
-minilab_2/work_rot/photos/*
+minilab_2/work_physical_rotation/photos/*
 minilab_2/work_constant_viscosity/photos/*
 maxilab/work/photos/*
+
+#LOGS
+minilab_1/work/LOGS/*
+minilab_2/work_physical_rotation/LOGS/*
+minilab_2/work_constant_viscosity/LOGS/*
+maxilab/work/LOGS/*
