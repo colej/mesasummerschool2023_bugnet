@@ -385,7 +385,7 @@
               if (ierr /= 0) return
 
               ! Print out degree, radial order, mode inertia, and frequency
-              print *, 'Found mode: l, m, n_p, n_g, zeta, nu = ', &
+              print *, 'Found mode: l, m, n_p, n_g, E_norm, nu = ', &
                 md%id-nmax_prev, md%l, md%m, md%n_p, md%n_g, md%n_pg, REAL(md%E_norm()),REAL(md%freq('UHZ'))
 
 

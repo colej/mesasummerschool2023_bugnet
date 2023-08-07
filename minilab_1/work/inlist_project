@@ -21,7 +21,7 @@
       initial_he3 = 5.0123679469208106e-05
       initial_he4 = 0.3019498763205308
 
-      initial_zfracs = 3 ! GS98
+      initial_zfracs = 3 ! Fractions of Z based on GS98
 
 
 
@@ -44,23 +44,26 @@
     use_Type2_opacities = .false.
     kap_Type2_full_off_X = 1d-3
     kap_Type2_full_on_X = 1d-6
-    Zbase = 0.031
+    
+    Zbase = 0.031  ! reference metallicity necessary to calculate element variations
 
 
 / ! end of kap namelist
 
 &controls
 
-   ! extra control parameter used to run GYRE
-   x_logical_ctrl(1) = .false.
+   ! extra control parameter used to run GYRE (see instructions)
+    x_logical_ctrl(1) = .false.
 
   ! when to stop
     log_Teff_lower_limit = 3.5
 
-
+  ! rename the output directory 
     log_directory = 'RG_M14_nonrot'
 
     initial_mass = 1.40d0
+
+  ! The diffusion coefficient for mixing of material, D_mix, will be at least this large
     set_min_D_mix = .true.
     min_D_mix = 1d1
 
@@ -70,7 +73,7 @@
       profile_interval       = 10
 
 
-      !Pulsation data output
+    ! Pulsation data output
       pulse_data_format = 'GYRE'
       write_pulse_data_with_profile = .true.
 
@@ -84,17 +87,20 @@
 
 !PHYSICS
 
+    ! atmospheric boudary conditions
       atm_option = 'T_tau'
       atm_T_tau_relation = 'Eddington'
       atm_T_tau_opacity = 'varying'
 
+    ! use Ledoux criterion to define location of the interface between radiative and convective regions
       use_Ledoux_criterion = .true.
 
 
-      mixing_length_alpha = 2.0d0 !1.8d0 ! Solar calibrated for Eddington_grey.
-      mlt_option = 'Cox'
+    ! Parametrisation of convection and overshooting
+      mixing_length_alpha = 2.0d0 ! Solar calibrated for Eddington_grey atmopsheric BC
+      mlt_option = 'Cox' ! MLT as developed in Cox & Giuli 1968, Chapter 14
 
-      !H core overshoot calibrated to typical g-mode pulsator
+    ! H core overshoot calibrated to typical g-mode pulsator
       overshoot_scheme(1) = 'exponential'
       overshoot_zone_type(1) = 'burn_H'
       overshoot_zone_loc(1) = 'core'
@@ -102,6 +108,7 @@
       overshoot_f(1) = 0.001
       overshoot_f0(1) = 0.005
 
+    ! ovserhoot at the boudaries of convective shells
       overshoot_scheme(2) = 'exponential'
       overshoot_zone_type(2) = 'any'
       overshoot_zone_loc(2) = 'shell'
@@ -109,16 +116,8 @@
       overshoot_f(2) = 0.015 !0.015
       overshoot_f0(2) = 0.005 ! 0.005
 
-!MESH AND TIMESTEP PARAMETERS: optimized for g modes
-
-!      mesh_delta_coeff  = 0.4
-!      varcontrol_target = 1d-3
-!      max_allowed_nz    = 50000
-!      time_delta_coeff = 0.5 !1d0 !0.15
-
-
-
-    do_conv_premix = .true.
+    ! expands convective boundaries until gradr = grada on the convective side of the boundary
+      do_conv_premix = .true.
 
 / ! end of controls namelist
 
