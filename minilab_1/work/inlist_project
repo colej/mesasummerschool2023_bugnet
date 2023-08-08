@@ -35,16 +35,16 @@
 
     !opacities with GS98 abundances
     use_Zbase_for_Type1 = .false.
-    kap_file_prefix = 'gs98' ! 'OP_a09_nans_removed_by_hand'
+    kap_file_prefix = 'gs98'
     kap_lowT_prefix = 'lowT_fa05_gs98'
-    kap_CO_prefix = 'gs98_co' !'a09_co'
+    kap_CO_prefix = 'gs98_co'
 
     !!!!!!!!!!!!!!!
     !CO enhanced opacities
     use_Type2_opacities = .false.
     kap_Type2_full_off_X = 1d-3
     kap_Type2_full_on_X = 1d-6
-    
+
     Zbase = 0.031  ! reference metallicity necessary to calculate element variations
 
 
@@ -52,13 +52,13 @@
 
 &controls
 
-   ! extra control parameter used to run GYRE (see instructions)
+  ! extra control parameter used to run GYRE (see instructions)
     x_logical_ctrl(1) = .false.
 
   ! when to stop
     log_Teff_lower_limit = 3.5
 
-  ! rename the output directory 
+  ! rename the output directory
     log_directory = 'RG_M14_nonrot'
 
     initial_mass = 1.40d0
@@ -77,12 +77,12 @@
       pulse_data_format = 'GYRE'
       write_pulse_data_with_profile = .true.
 
-      num_cells_for_smooth_brunt_B = 0
-      interpolate_rho_for_pulse_data = .true.
-      add_center_point_to_pulse_data     = .true.
-      keep_surface_point_for_pulse_data  = .true.
-      add_double_points_to_pulse_data    = .true.
-
+    ! Format of data output for GYRE
+      num_cells_for_smooth_brunt_B = 0    ! No smoothing when calculating the Brunt-Vaisala frequency
+      interpolate_rho_for_pulse_data = .true.  ! Interpolate density from face to center of cell
+      add_center_point_to_pulse_data     = .true.  ! add point for r=0 to pulse files
+      keep_surface_point_for_pulse_data  = .true.  ! add k=1 cell to pulse files
+      add_double_points_to_pulse_data    = .true.  ! add double points at discontinuities
 
 
 !PHYSICS

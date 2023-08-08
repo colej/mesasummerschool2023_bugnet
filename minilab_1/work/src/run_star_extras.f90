@@ -324,7 +324,7 @@
               ! s% need_to_update_history_now = .true.
 
            if (safe_log10(s% Teff) < 3.7 .and. s%x_logical_ctrl(1)) call run_gyre(id, ierr)
-           !chi2_old = chi2
+
 
 
            ! see extras_check_model for information about custom termination codes
@@ -391,7 +391,7 @@
 
               frequencies(md%l+1, md%id-nmax_prev) = REAL(md%freq('UHZ'))
               inertias(md%l+1, md%id-nmax_prev) = REAL(md%E_norm())
-              nmax = md%id 
+              nmax = md%id
               retcode = 0
            end subroutine process_mode
 
